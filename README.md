@@ -3,8 +3,8 @@
 > Create a reusable table component in React.
 
 ## Expectations
-- [ ] Table should have 4 or more columns.
-- [ ] Table data state
+- [x] Table should have 4 or more columns.
+- [x] Table data state
     - Asynchronously fetching data can be faked (setTimeout, Promise, …)
     - Display in-flight state while fetching data
     - The data isn’t important, it can be anything you like.
@@ -22,7 +22,7 @@
 
 ## Tech stack
 
-- Bootstrapped with Typescript
+- Bootstrapped Create React App with Typescript
 - State managed and orchestraed by [XState](https://xstate.js.org)
 
 ## Available Scripts
