@@ -11,7 +11,7 @@
 - [x] Table should have pagination (ex. 100 records, 25 records per page)
     - Next / Previous buttons
     - Show current page number
-- [ ] Table should have filtering
+- [x] Table should have filtering
     - At least one column should be sortable
     - Add a search bar above table to filter by one data property
 - [ ] Table rows should be selectable

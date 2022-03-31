@@ -9,13 +9,14 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
     canPrevPage,
     currentPageNumber,
     goToPage,
-    headers,
     nextPage,
     pageSize,
     previousPage,
     rows,
     searchFor,
     setPageSize,
+    sortBy,
+    sortByColumn,
     totalPages,
   } = useTable({ columns, data });
 
@@ -24,14 +25,28 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
       <input
         type="text"
         style={{ width: "300px" }}
-        placeholder={`Search for ${headers.join(", ")}`}
+        placeholder={`Search for ${columns
+          .map(({ header }) => header)
+          .join(", ")}`}
         onChange={searchFor}
       />
       <table>
         <thead>
           <tr>
-            {headers.map((header, i) => (
-              <th key={`${header}-${i}`}>{header}</th>
+            {columns.map(({ header, accessor }, i) => (
+              <th
+                role="button"
+                onClick={() => sortByColumn(accessor)}
+                key={`${header}-${i}`}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                {header}{" "}
+                {sortBy?.columnName === accessor && (
+                  <>{sortBy.sort === "desc" ? " 🔽" : " 🔼"}</>
+                )}
+              </th>
             ))}
           </tr>
         </thead>

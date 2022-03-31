@@ -4,11 +4,14 @@ import { BoxedTableProps } from "./types";
 const INITIAL_PAGE_SIZE = 20;
 
 export const useTable = ({ columns, data }: BoxedTableProps) => {
-  const headers = columns.map((col) => col.header);
   const [pageSize, setPageSize] = useState<number>(INITIAL_PAGE_SIZE);
   const [currentPageNumber, goToPage] = useState<number>(1);
   const [filteredData, setFilteredData] = useState<any>(null);
   const [rows, setRows] = useState<any>(null);
+  const [sortBy, setSortBy] = useState<{
+    columnName: string;
+    sort: "asc" | "desc";
+  } | null>(null);
 
   useEffect(() => {
     setFilteredData(data);
@@ -41,18 +44,38 @@ export const useTable = ({ columns, data }: BoxedTableProps) => {
     goToPage(1);
   };
 
+  const sortByColumn = (columnName: string) => {
+    const sortedData = filteredData.sort((a: any, b: any) => {
+      const leftArgument =
+        sortBy?.sort === "desc" ? a[columnName] : b[columnName];
+      const rightArgument =
+        sortBy?.sort === "asc" ? a[columnName] : b[columnName];
+
+      return String(leftArgument).localeCompare(
+        String(rightArgument),
+        undefined,
+        { numeric: true, sensitivity: "base" }
+      );
+    });
+
+    setFilteredData([...sortedData]);
+    setSortBy({ columnName, sort: sortBy?.sort === "desc" ? "asc" : "desc" });
+    goToPage(1);
+  };
+
   return {
     canNextPage: currentPageNumber < Math.ceil(filteredData?.length / pageSize),
     canPrevPage: currentPageNumber > 1,
     currentPageNumber,
     goToPage,
-    headers,
     nextPage: () => goToPage(currentPageNumber + 1),
     pageSize,
     previousPage: () => goToPage(currentPageNumber - 1),
     rows,
     searchFor,
     setPageSize,
+    sortBy,
+    sortByColumn,
     totalPages: Math.ceil(filteredData?.length / pageSize) || 1,
   };
 };
