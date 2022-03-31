@@ -1,8 +1,26 @@
-# Getting Started with Create React App
+# Frontend React Table Test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Create a reusable table component in React.
 
-## Tect stack
+## Expectations
+- [ ] Table should have 4 or more columns.
+- [ ] Table data state
+    - Asynchronously fetching data can be faked (setTimeout, Promise, …)
+    - Display in-flight state while fetching data
+    - The data isn’t important, it can be anything you like.
+- [ ] Table should have pagination (ex. 100 records, 25 records per page)
+    - Next / Previous buttons
+    - Show current page number
+- [ ] Table should have filtering
+    - At least one column should be sortable
+    - Add a search bar above table to filter by one data property
+- [ ] Table rows should be selectable
+    - Create a checkbox for each row
+    - Display selected rows as JSON below Table component
+- [x] No class components. Use hooks.
+
+
+## Tech stack
 
 - Bootstrapped with Typescript
 - State managed and orchestraed by [XState](https://xstate.js.org)
