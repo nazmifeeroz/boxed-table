@@ -8,7 +8,7 @@
     - Asynchronously fetching data can be faked (setTimeout, Promise, …)
     - Display in-flight state while fetching data
     - The data isn’t important, it can be anything you like.
-- [ ] Table should have pagination (ex. 100 records, 25 records per page)
+- [x] Table should have pagination (ex. 100 records, 25 records per page)
     - Next / Previous buttons
     - Show current page number
 - [ ] Table should have filtering
