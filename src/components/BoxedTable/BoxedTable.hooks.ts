@@ -1,18 +1,18 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { BoxedTableProps } from "./types";
+import { BoxedTableProps, SelectedRowType } from "./types";
 
 const INITIAL_PAGE_SIZE = 20;
 
 export const useTable = ({ columns, data }: BoxedTableProps) => {
   const [pageSize, setPageSize] = useState<number>(INITIAL_PAGE_SIZE);
   const [currentPageNumber, goToPage] = useState<number>(1);
-  const [filteredData, setFilteredData] = useState<any>(null);
-  const [rows, setRows] = useState<any>(null);
+  const [filteredData, setFilteredData] = useState<typeof data>([]);
+  const [rows, setRows] = useState<typeof data>([]);
   const [sortBy, setSortBy] = useState<{
     columnName: string;
     sort: "asc" | "desc";
   } | null>(null);
-  const [selectedRows, setSelectedRows] = useState<any>([]);
+  const [selectedRows, setSelectedRows] = useState<SelectedRowType[]>([]);
 
   useEffect(() => {
     setFilteredData(data);
@@ -46,7 +46,7 @@ export const useTable = ({ columns, data }: BoxedTableProps) => {
   };
 
   const sortByColumn = (columnName: string) => {
-    const sortedData = filteredData.sort((a: any, b: any) => {
+    const sortedData = filteredData?.sort((a: any, b: any) => {
       const leftArgument =
         sortBy?.sort === "desc" ? a[columnName] : b[columnName];
       const rightArgument =

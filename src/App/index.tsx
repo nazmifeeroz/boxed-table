@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import BoxedTable from "../components/BoxedTable";
-import { Posts } from "./types";
+import { Post } from "./types";
 
 function App() {
-  const [posts, setPosts] = useState<Posts>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
