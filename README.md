@@ -14,7 +14,7 @@
 - [x] Table should have filtering
     - At least one column should be sortable
     - Add a search bar above table to filter by one data property
-- [ ] Table rows should be selectable
+- [x] Table rows should be selectable
     - Create a checkbox for each row
     - Display selected rows as JSON below Table component
 - [x] No class components. Use hooks.

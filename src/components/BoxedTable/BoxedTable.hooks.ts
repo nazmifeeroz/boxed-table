@@ -12,6 +12,7 @@ export const useTable = ({ columns, data }: BoxedTableProps) => {
     columnName: string;
     sort: "asc" | "desc";
   } | null>(null);
+  const [selectedRows, setSelectedRows] = useState<any>([]);
 
   useEffect(() => {
     setFilteredData(data);
@@ -66,13 +67,17 @@ export const useTable = ({ columns, data }: BoxedTableProps) => {
   return {
     canNextPage: currentPageNumber < Math.ceil(filteredData?.length / pageSize),
     canPrevPage: currentPageNumber > 1,
+    clearSelectedRows: () => setSelectedRows([]),
     currentPageNumber,
     goToPage,
     nextPage: () => goToPage(currentPageNumber + 1),
+    onSelectRow: (rowData: any, key: string) =>
+      setSelectedRows([...selectedRows, { rowData, key }]),
     pageSize,
     previousPage: () => goToPage(currentPageNumber - 1),
     rows,
     searchFor,
+    selectedRows,
     setPageSize,
     sortBy,
     sortByColumn,

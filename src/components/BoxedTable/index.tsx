@@ -7,13 +7,16 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
   const {
     canNextPage,
     canPrevPage,
+    clearSelectedRows,
     currentPageNumber,
     goToPage,
     nextPage,
+    onSelectRow,
     pageSize,
     previousPage,
     rows,
     searchFor,
+    selectedRows,
     setPageSize,
     sortBy,
     sortByColumn,
@@ -33,6 +36,7 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
       <table>
         <thead>
           <tr>
+            <th />
             {columns.map(({ header, accessor }, i) => (
               <th
                 role="button"
@@ -52,7 +56,21 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
         </thead>
         <tbody>
           {rows?.map((rowData: any, i: number) => (
-            <tr key={`${id}-${i}`}>
+            <tr key={`${id}-${i}-${currentPageNumber}`}>
+              <td>
+                <input
+                  type="checkbox"
+                  onChange={() =>
+                    onSelectRow(rowData, `${id}-${i}-${currentPageNumber}`)
+                  }
+                  checked={
+                    !!selectedRows.find(
+                      (row: any) =>
+                        row.key === `${id}-${i}-${currentPageNumber}`
+                    )
+                  }
+                />
+              </td>
               {columns.map((col, i) => (
                 <td key={`${col.accessor}-${i}`}>{rowData[col.accessor]}</td>
               ))}
@@ -94,6 +112,16 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
             style={{ width: "100px" }}
           />
         </span>{" "}
+      </div>
+      <div>
+        <pre>
+          {JSON.stringify(
+            selectedRows.map(({ rowData }: any) => rowData),
+            undefined,
+            2
+          )}
+        </pre>
+        <button onClick={clearSelectedRows}>Clear</button>
       </div>
     </>
   );
