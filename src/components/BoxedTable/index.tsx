@@ -11,15 +11,22 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
     goToPage,
     headers,
     nextPage,
+    pageSize,
     previousPage,
     rows,
+    searchFor,
     setPageSize,
     totalPages,
-    pageSize,
   } = useTable({ columns, data });
 
   return (
     <>
+      <input
+        type="text"
+        style={{ width: "300px" }}
+        placeholder={`Search for ${headers.join(", ")}`}
+        onChange={searchFor}
+      />
       <table>
         <thead>
           <tr>
@@ -29,7 +36,7 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
           </tr>
         </thead>
         <tbody>
-          {rows.map((rowData: any, i: number) => (
+          {rows?.map((rowData: any, i: number) => (
             <tr key={`${id}-${i}`}>
               {columns.map((col, i) => (
                 <td key={`${col.accessor}-${i}`}>{rowData[col.accessor]}</td>
