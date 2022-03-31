@@ -113,16 +113,18 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
           />
         </span>{" "}
       </div>
-      <div>
-        <pre>
-          {JSON.stringify(
-            selectedRows.map(({ rowData }: any) => rowData),
-            undefined,
-            2
-          )}
-        </pre>
-        <button onClick={clearSelectedRows}>Clear</button>
-      </div>
+      {selectedRows.length > 0 && (
+        <div>
+          <pre>
+            {JSON.stringify(
+              selectedRows.map(({ rowData }: any) => rowData),
+              undefined,
+              2
+            )}
+          </pre>
+          <button onClick={clearSelectedRows}>Clear</button>
+        </div>
+      )}
     </>
   );
 };
