@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import BoxedTable from "../components/BoxedTable";
+import DisplaySelection from "../components/DisplaySelection";
+import TableContextProvider from "../contexts/TableContext";
 import { Container } from "./App.styled";
 import { Post } from "./types";
 
@@ -36,9 +38,12 @@ function App() {
   if (isLoading) return <>loading...</>;
 
   return (
-    <Container>
-      <BoxedTable columns={columns} data={posts} />
-    </Container>
+    <TableContextProvider>
+      <Container>
+        <BoxedTable columns={columns} data={posts} />
+        <DisplaySelection />
+      </Container>
+    </TableContextProvider>
   );
 }
 

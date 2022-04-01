@@ -1,4 +1,5 @@
-import { FC, useEffect, useId } from "react";
+import { FC, useContext, useEffect, useId } from "react";
+import { TableContext } from "../../contexts/TableContext";
 import useQueryParams from "../../hooks/useQueryParams";
 import { useTable } from "./BoxedTable.hooks";
 import {
@@ -15,20 +16,18 @@ import { BoxedTableProps } from "./types";
 const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
   const id = useId();
   const { setQueryParams, query } = useQueryParams();
+  const tableContext = useContext(TableContext);
 
   const {
     canNextPage,
     canPrevPage,
-    clearSelectedRows,
     currentPageNumber,
     goToPage,
     nextPage,
-    onSelectRow,
     pageSize,
     previousPage,
     rows,
     searchFor,
-    selectedRows,
     setPageSize,
     sortBy,
     sortByColumn,
@@ -125,10 +124,13 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
                 <input
                   type="checkbox"
                   onChange={() =>
-                    onSelectRow(rowData, `${id}-${i}-${currentPageNumber}`)
+                    tableContext.onSelectRow!(
+                      rowData,
+                      `${id}-${i}-${currentPageNumber}`
+                    )
                   }
                   checked={
-                    !!selectedRows.find(
+                    !!tableContext.selectedRows?.find(
                       (row: any) =>
                         row.key === `${id}-${i}-${currentPageNumber}`
                     )
@@ -142,18 +144,6 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
           ))}
         </tbody>
       </table>
-      {selectedRows.length > 0 && (
-        <div>
-          <pre>
-            {JSON.stringify(
-              selectedRows.map(({ rowData }: any) => rowData),
-              undefined,
-              2
-            )}
-          </pre>
-          <button onClick={clearSelectedRows}>Clear Selected Rows</button>
-        </div>
-      )}
     </>
   );
 };

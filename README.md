@@ -23,7 +23,7 @@
 - [x] Manage table states via url query params
     - Initialize Table state via url query params
     - Continue managing Table state via url query params
-- [-] Testing (ie. testing-library)
+- [x] Testing (ie. testing-library)
 
 ## Tech stack
 

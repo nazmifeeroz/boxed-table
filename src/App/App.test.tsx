@@ -26,29 +26,33 @@ describe("Boxed table", () => {
     render(<App />);
 
     await waitFor(() => {
-      const pageNumber = screen.getByText(/1 of 5/i);
+      const pageNumber = screen.getByText(/Go to page/i);
       expect(pageNumber).toBeInTheDocument();
     });
 
     await waitFor(() => {
-      const pageNumber = screen.getByText(/1 of 5/i);
-      expect(pageNumber).toBeInTheDocument();
+      const titleHeader = screen.getByText(/Title/i);
+      expect(titleHeader).toBeInTheDocument();
     });
 
     const nextButton = screen.getByTestId("next-button");
     fireEvent.click(nextButton);
 
     await waitFor(() => {
-      const pageNumber = screen.getByText(/2 of 5/i);
-      expect(pageNumber).toBeInTheDocument();
+      const pageNumber = screen.getByTestId(
+        "go-to-page-input"
+      ) as HTMLInputElement;
+      expect(pageNumber.value).toBe("2");
     });
 
     const prevButton = screen.getByTestId("prev-button");
     fireEvent.click(prevButton);
 
     await waitFor(() => {
-      const pageNumber = screen.getByText(/1 of 5/i);
-      expect(pageNumber).toBeInTheDocument();
+      const pageNumber = screen.getByTestId(
+        "go-to-page-input"
+      ) as HTMLInputElement;
+      expect(pageNumber.value).toBe("1");
     });
 
     const selectPageSize = screen.getByTestId("select-page-size");
@@ -67,8 +71,10 @@ describe("Boxed table", () => {
     fireEvent.change(gotoPageInput, { target: { value: 4 } });
 
     await waitFor(() => {
-      const pageNumber = screen.getByText(/4 of 4/i);
-      expect(pageNumber).toBeInTheDocument();
+      const pageNumber = screen.getByTestId(
+        "go-to-page-input"
+      ) as HTMLInputElement;
+      expect(pageNumber.value).toBe("4");
     });
   });
 });
