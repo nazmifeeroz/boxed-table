@@ -1,9 +1,12 @@
-import { FC, useId } from "react";
+import { FC, useEffect, useId } from "react";
+import useQueryParams from "../../hooks/useQueryParams";
 import { useTable } from "./BoxedTable.hooks";
 import { BoxedTableProps } from "./types";
 
 const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
   const id = useId();
+  const { setQueryParams, query } = useQueryParams();
+
   const {
     canNextPage,
     canPrevPage,
@@ -22,6 +25,22 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
     sortByColumn,
     totalPages,
   } = useTable({ columns, data });
+
+  useEffect(() => {
+    if (query.params.page) goToPage(parseInt(query.params.page));
+    if (query.params.pageSize) setPageSize(parseInt(query.params.pageSize));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setQueryParams([
+      { key: "page", value: currentPageNumber },
+      {
+        key: "pageSize",
+        value: pageSize,
+      },
+    ]);
+  }, [currentPageNumber, setQueryParams, pageSize]);
 
   return (
     <>
@@ -79,10 +98,10 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
         </tbody>
       </table>
       <div>
-        <button onClick={() => previousPage()} disabled={!canPrevPage}>
+        <button onClick={previousPage} disabled={!canPrevPage}>
           prev
         </button>
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
+        <button onClick={nextPage} disabled={!canNextPage}>
           next
         </button>
         <span>

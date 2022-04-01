@@ -20,7 +20,7 @@
 - [x] No class components. Use hooks.
 
 ## Bonus **Not Required**:
-- [ ] Manage table states via url query params
+- [x] Manage table states via url query params
     - Initialize Table state via url query params
     - Continue managing Table state via url query params
 - [ ] Testing (ie. testing-library)
