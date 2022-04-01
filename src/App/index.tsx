@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import BoxedTable from "../components/BoxedTable";
+import { Container } from "./App.styled";
 import { Post } from "./types";
 
 function App() {
@@ -35,9 +36,9 @@ function App() {
   if (isLoading) return <>loading...</>;
 
   return (
-    <div className="App">
+    <Container>
       <BoxedTable columns={columns} data={posts} />
-    </div>
+    </Container>
   );
 }
 

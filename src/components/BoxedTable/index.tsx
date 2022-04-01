@@ -1,6 +1,15 @@
 import { FC, useEffect, useId } from "react";
 import useQueryParams from "../../hooks/useQueryParams";
 import { useTable } from "./BoxedTable.hooks";
+import {
+  Button,
+  GotoPageBox,
+  PageInput,
+  PaginationWrapper,
+  SearchBox,
+  Select,
+  TableHeader,
+} from "./BoxedTable.styled";
 import { BoxedTableProps } from "./types";
 
 const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
@@ -44,32 +53,68 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
 
   return (
     <>
-      <input
-        type="text"
-        style={{ width: "300px" }}
-        placeholder={`Search for ${columns
-          .map(({ header }) => header)
-          .join(", ")}`}
-        onChange={searchFor}
-      />
+      <PaginationWrapper>
+        <Button
+          data-testid="prev-button"
+          onClick={previousPage}
+          disabled={!canPrevPage}
+        >
+          &lt;
+        </Button>
+        <Button
+          data-testid="next-button"
+          onClick={nextPage}
+          disabled={!canNextPage}
+        >
+          &gt;
+        </Button>
+        <SearchBox
+          placeholder={`Search for ${columns
+            .map(({ header }) => header)
+            .join(", ")}`}
+          onChange={searchFor}
+        />
+        <GotoPageBox>
+          Go to page:
+          <PageInput
+            data-testid="go-to-page-input"
+            value={currentPageNumber.toString() || 0}
+            min={1}
+            max={totalPages}
+            onChange={(e) =>
+              goToPage(e.target.value === "" ? 0 : e.target.valueAsNumber)
+            }
+          />
+          of {totalPages}
+        </GotoPageBox>
+        <Select
+          value={pageSize}
+          data-testid="select-page-size"
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
+          }}
+        >
+          {[10, 20, 30, 40, 50].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </Select>
+      </PaginationWrapper>
       <table>
         <thead>
           <tr>
             <th />
             {columns.map(({ header, accessor }, i) => (
-              <th
-                role="button"
+              <TableHeader
                 onClick={() => sortByColumn(accessor)}
                 key={`${header}-${i}`}
-                style={{
-                  cursor: "pointer",
-                }}
               >
                 {header}{" "}
                 {sortBy?.columnName === accessor && (
                   <>{sortBy.sort === "desc" ? " 🔽" : " 🔼"}</>
                 )}
-              </th>
+              </TableHeader>
             ))}
           </tr>
         </thead>
@@ -97,53 +142,6 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
           ))}
         </tbody>
       </table>
-      <div>
-        <button
-          type="button"
-          data-testid="prev-button"
-          onClick={previousPage}
-          disabled={!canPrevPage}
-        >
-          prev
-        </button>
-        <button
-          type="button"
-          data-testid="next-button"
-          onClick={nextPage}
-          disabled={!canNextPage}
-        >
-          next
-        </button>
-        <span>
-          {currentPageNumber} of {totalPages}
-        </span>
-        <select
-          value={pageSize}
-          data-testid="select-page-size"
-          onChange={(e) => {
-            setPageSize(Number(e.target.value));
-          }}
-        >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
-        <span>
-          {" "}
-          | Go to page:{" "}
-          <input
-            data-testid="go-to-page-input"
-            type="number"
-            defaultValue={currentPageNumber}
-            onChange={(e) =>
-              goToPage(e.target.value ? e.target.valueAsNumber : 1)
-            }
-            style={{ width: "100px" }}
-          />
-        </span>{" "}
-      </div>
       {selectedRows.length > 0 && (
         <div>
           <pre>
