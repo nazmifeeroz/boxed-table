@@ -75,7 +75,7 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
         </thead>
         <tbody>
           {rows?.map((rowData: any, i: number) => (
-            <tr key={`${id}-${i}-${currentPageNumber}`}>
+            <tr key={`${id}-${i}-${currentPageNumber}`} data-testid="row-data">
               <td>
                 <input
                   type="checkbox"
@@ -98,10 +98,20 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
         </tbody>
       </table>
       <div>
-        <button onClick={previousPage} disabled={!canPrevPage}>
+        <button
+          type="button"
+          data-testid="prev-button"
+          onClick={previousPage}
+          disabled={!canPrevPage}
+        >
           prev
         </button>
-        <button onClick={nextPage} disabled={!canNextPage}>
+        <button
+          type="button"
+          data-testid="next-button"
+          onClick={nextPage}
+          disabled={!canNextPage}
+        >
           next
         </button>
         <span>
@@ -109,6 +119,7 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
         </span>
         <select
           value={pageSize}
+          data-testid="select-page-size"
           onChange={(e) => {
             setPageSize(Number(e.target.value));
           }}
@@ -123,6 +134,7 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
           {" "}
           | Go to page:{" "}
           <input
+            data-testid="go-to-page-input"
             type="number"
             defaultValue={currentPageNumber}
             onChange={(e) =>
@@ -141,7 +153,7 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
               2
             )}
           </pre>
-          <button onClick={clearSelectedRows}>Clear</button>
+          <button onClick={clearSelectedRows}>Clear Selected Rows</button>
         </div>
       )}
     </>

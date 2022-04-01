@@ -19,18 +19,15 @@
     - Display selected rows as JSON below Table component
 - [x] No class components. Use hooks.
 
-## Bonus **Not Required**:
+## Bonus (_Not Required_):
 - [x] Manage table states via url query params
     - Initialize Table state via url query params
     - Continue managing Table state via url query params
-- [ ] Testing (ie. testing-library)
-
-
+- [-] Testing (ie. testing-library)
 
 ## Tech stack
 
 - Bootstrapped Create React App with Typescript
-- State managed and orchestraed by [XState](https://xstate.js.org)
 
 ## Available Scripts
 
