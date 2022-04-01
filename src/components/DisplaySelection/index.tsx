@@ -7,7 +7,7 @@ const DisplaySelection = () => {
   if (tableContext.selectedRows.length === 0) return null;
 
   return (
-    <div>
+    <div data-testid="display-selection">
       <pre>
         {JSON.stringify(
           tableContext.selectedRows.map(({ rowData }: any) => rowData),

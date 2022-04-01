@@ -123,6 +123,7 @@ const BoxedTable: FC<BoxedTableProps> = ({ data, columns }) => {
               <td>
                 <input
                   type="checkbox"
+                  data-testid="row-checkbox"
                   onChange={() =>
                     tableContext.onSelectRow!(
                       rowData,
